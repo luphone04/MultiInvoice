@@ -53,7 +53,11 @@ and you will have to answer any questions based on the uploaded invoice image
 ## if submit button is clicked
 
 if submit:
-    image_data=input_image_details(uploaded_file)
-    response=get_gemini_response(input_prompt,image_data,input)
-    st.subheader("The Rresponse is")
-    st.write(response)
+    with st.spinner("Analyzing..."):
+        try:
+            image_data=input_image_details(uploaded_file)
+            response=get_gemini_response(input_prompt,image_data,input)
+            st.subheader("The Rresponse is")
+            st.write(response)
+        except Exception as e:
+            st.error(f"Error: {e}")
