@@ -9,10 +9,10 @@ import google.generativeai as genai
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 ## Load Gemini pro vision model
-model=genai.GenerativeModel('gemini-pro-vision')
+model = genai.GenerativeModel('gemini-pro-vision')
 
-def get_gemini_response(input,image,user_prompt):
-    response=model.generate_content([input,image[0],user_prompt])
+def get_gemini_response(input, image, user_prompt):
+    response = model.generate_content([input, image[0], user_prompt])
     return response.text
 
 def input_image_details(uploaded_file):
@@ -30,34 +30,34 @@ def input_image_details(uploaded_file):
     else:
         raise FileNotFoundError("No file uploaded")
 
-
 ##initialize our streamlit app
 
 st.set_page_config(page_title="MultiLanguage Invoice Extractor")
 
 st.header("MultiLanguage Invoice Extractor")
-input=st.text_input("Input Prompt: ",key="input")
+input_text = st.text_input("Input Prompt:", key="input")
 uploaded_file = st.file_uploader("Choose an image of the invoice...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    image=Image.open(uploaded_file)
+    image = Image.open(uploaded_file)
     st.image(image, caption="Uploaded Image.", use_column_width=True)
 
-submit=st.button("Tell me about the invoice")
+submit_button = st.button("Tell me about the invoice")
 
-input_prompt="""
-You are an expert in understanding invoices. We will upload a a image as invoice
-and you will have to answer any questions based on the uploaded invoice image
+input_prompt = """
+You are an expert in understanding invoices. We will upload an image as an invoice,
+and you will have to answer any questions based on the uploaded invoice image. If there is no
+information and answer for the question asked, simply says it is not specified in the invoice.
 """
 
 ## if submit button is clicked
-
-if submit:
-    with st.spinner("Analyzing..."):
+if submit_button:
+    with st.spinner("Analyzing...") and st.text("Analysis in progress..."):
+        
         try:
-            image_data=input_image_details(uploaded_file)
-            response=get_gemini_response(input_prompt,image_data,input)
-            st.subheader("The Rresponse is")
+            image_data = input_image_details(uploaded_file)
+            response = get_gemini_response(input_prompt, image_data, input_text)
+            st.subheader("The Response is")
             st.write(response)
         except Exception as e:
             st.error(f"Error: {e}")
