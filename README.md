@@ -18,3 +18,5 @@ MultiLanguage Invoice Extractor is a web application that utilizes the Gemini Pr
 - Streamlit: Streamlit is used to create the web application and interface with the Gemini Pro Vision model.
 - PIL (Python Imaging Library): PIL is used to process and display images uploaded by users.
 - Google GenerativeAI: The Gemini Pro Vision model, provided by Google GenerativeAI, is used for analyzing invoices and generating responses.
+## Live Demo
+You can access the live demo of the application here https://invoice-extract.streamlit.app/ .
